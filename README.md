@@ -1,7 +1,5 @@
 # My Django App
 
-------
-
 This repository for my practicing and learning the Django Framework.
 
 You can see how I get better
