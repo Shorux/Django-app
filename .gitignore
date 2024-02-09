@@ -1,2 +1,7 @@
+# files
+*.sqlite3
+
+# catalogs
+__pycache__
 .idea
 .venv
