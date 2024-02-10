@@ -1,8 +1,8 @@
 # My Django App
 
-This repository for my practicing and learning the Django Framework.
+This repository for my practicing and learning of the Django Framework.
 
-You can see how I get better
+You can see me get better
 
 -------
 
