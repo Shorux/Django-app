@@ -1,8 +1,8 @@
-import views
+from . import views
 
 from django.urls import path
 
 urlpatterns = [
-    path('admin/'),
-    path('', views.index)
+    path('', views.index),
+    path('blogs/', views.blogs)
 ]
