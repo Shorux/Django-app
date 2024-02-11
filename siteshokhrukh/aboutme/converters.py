@@ -1,5 +1,5 @@
 class FourDigitYearConverter:
-    regexp = '[0-9]{4}'
+    regex = '[0-9]{4}'
 
     def to_python(self, value: str):
         return int(value)
