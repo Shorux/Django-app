@@ -28,7 +28,10 @@ def index(request: HttpRequest):
 
 
 def about(request: HttpRequest):
-    data = {'title': 'О сайте'}
+    data = {
+        'title': 'О сайте',
+        'menu': menu
+    }
     return render(request, 'aboutme/about.html', data)
 
 

@@ -1,36 +1,19 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <ul>
-        <li>
-            <a href="{% url 'home' %}">Главная страница</a>
-        </li>
-        {% for m in menu %}
-        {% if forloop.last %}<li class="last">{% else %}<li>{% endif %}
-            <a href="{% url m.url_name %}">{{ m.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
+{% extends 'base.html' %}
 
-    <p>{{ menu|join:' | ' }}</p>
-    <h1>{{ title }}</h1>
-    <ul>
-        {% for blog in blogs %}
-            {% if blog.is_published %}
-            <li>
-                <h2>{{ blog.title }}</h2>
-                <p>{{ blog.content }}</p>
-                <p><a href="{% url 'blog' blog.id %}">Читать блог</a></p>
-                {% if not forloop.last %}
-                <hr>
-                {% endif %}
-            </li>
+{% block content %}
+<h1>{{ title }}</h1>
+<ul>
+    {% for blog in blogs %}
+        {% if blog.is_published %}
+        <li>
+            <h2>{{ blog.title }}</h2>
+            <p>{{ blog.content }}</p>
+            <p><a href="{% url 'blog' blog.id %}">Читать блог</a></p>
+            {% if not forloop.last %}
+            <hr>
             {% endif %}
-        {% endfor %}
-    </ul>
-</body>
-</html>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
