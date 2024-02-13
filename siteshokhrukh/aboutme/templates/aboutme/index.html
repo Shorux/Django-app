@@ -5,7 +5,20 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <p>{{ menu }}</p>
+    <p>{{ menu|join:' | ' }}</p>
     <h1>{{ title }}</h1>
+    <ul>
+        {% for p in posts %}
+            {% if p.is_published %}
+            <li>
+                <h2>{{ p.title }}</h2>
+                <p>{{ p.content }}</p>
+                {% if not forloop.last %}
+                <hr>
+                {% endif %}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
 </body>
 </html>

@@ -6,11 +6,18 @@ from django.urls import reverse
 
 menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелина Джоли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Роби', 'content': 'Биография Марго Роби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True}
+]
+
 
 def index(request: HttpRequest):
     data = {
         'title': 'Главная страница',
-        'menu': menu
+        'menu': menu,
+        'posts': data_db
     }
     return render(request, 'aboutme/index.html', data)
 
