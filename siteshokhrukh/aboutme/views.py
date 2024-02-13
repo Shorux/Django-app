@@ -1,10 +1,23 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
+menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+
+
 def index(request: HttpRequest):
-    return HttpResponse('Страница приложения aboutme')
+    data = {
+        'title': 'Главная страница',
+        'menu': menu
+    }
+    return render(request, 'aboutme/index.html', data)
+
+
+def about(request: HttpRequest):
+    data = {'title': 'О сайте'}
+    return render(request, 'aboutme/about.html', data)
 
 
 def blogs_by_id(request: HttpRequest, blog_id: int):
