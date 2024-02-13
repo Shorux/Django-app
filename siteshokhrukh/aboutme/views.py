@@ -4,7 +4,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+menu = [
+    {'title': 'О сайте', 'url_name': 'about'},
+    {'title': 'Добавить статью', 'url_name': 'addpage'},
+    {'title': 'Обратная связь', 'url_name': 'contact'},
+    {'title': 'Войти', 'url_name': 'login'}
+]
 
 data_db = [
     {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелина Джоли', 'is_published': True},
@@ -17,7 +22,7 @@ def index(request: HttpRequest):
     data = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': data_db
+        'blogs': data_db
     }
     return render(request, 'aboutme/index.html', data)
 
@@ -27,20 +32,20 @@ def about(request: HttpRequest):
     return render(request, 'aboutme/about.html', data)
 
 
-def blogs_by_id(request: HttpRequest, blog_id: int):
-    return HttpResponse(f'<h1>Статья</h1><p>id: {blog_id}</p>')
+def show_blog(request: HttpRequest, blog_id: int):
+    return HttpResponse(f'<h1>Отображение блога с id {blog_id}</h1>')
 
 
-def blogs_by_slug(request: HttpRequest, blog_slug: int):
-    return HttpResponse(f'<h1>Статья</h1><p>slug: {blog_slug}</p>')
+def addpage(request: HttpRequest):
+    return HttpResponse('Добавление блога')
 
 
-def archive(request: HttpRequest, year: int):
-    if year > 2024:
-        uri = reverse('blog_slug', args=('music', ))
-        return redirect(uri)  # permanent=True for 301 else 302
+def contact(request: HttpRequest):
+    return HttpResponse('Страница контактов')
 
-    return HttpResponse(f'<h1>Архив из {year} года</h1>')
+
+def login(request: HttpRequest):
+    return HttpResponse('Страница для авторизации')
 
 
 def page_not_found(request: HttpRequest, exception):
