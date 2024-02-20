@@ -2,12 +2,18 @@ import aboutme.views as views
 
 from django.template import Library
 
+
 register = Library()
 
 
 @register.simple_tag()
 def get_categories():
     return views.cats_db
+
+
+@register.simple_tag()
+def get_menu():
+    return views.menu
 
 
 @register.inclusion_tag('aboutme/list_categories.html')
