@@ -3,12 +3,17 @@
 {% block content %}
 <ul class="list-articles">
 	{% for blog in blogs %}
-	<li><h2>{{blog.title}}</h2>
-	{% autoescape off %}
-	{{blog.content|linebreaks|truncatewords:40}}
-	{% endautoescape %}
-	<div class="clear"></div>
-	<p class="link-read-post"><a href="{{ blog.get_absolute_url }}">Читать пост</a></p>
+	<li>
+		<div class="article-panel">
+			<p class="first">Категория: {{ blog.cat.name }}</p>
+			<p class="last">Дата: {{ blog.time_update|date:"d-m-Y H:i:s" }}</p>
+		</div>
+		<h2>{{blog.title}}</h2>
+		{% autoescape off %}
+		{{ blog.content|linebreaks|truncatewords:40 }}
+		{% endautoescape %}
+		<div class="clear"></div>
+		<p class="link-read-post"><a href="{{ blog.get_absolute_url }}">Читать пост</a></p>
 	</li>
 	{% endfor %}
 </ul>

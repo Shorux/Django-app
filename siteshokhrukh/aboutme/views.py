@@ -1,26 +1,13 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Women
+from .models import Women, Category
 
 menu = [
     {'title': "О сайте", 'url_name': 'about'},
     {'title': "Добавить статью", 'url_name': 'addpage'},
     {'title': "Обратная связь", 'url_name': 'contact'},
     {'title': "Войти", 'url_name': 'login'}
-]
-
-data_db = [
-    {'id': 1, 'title': 'Анджелина Джоли', 'content': '',
-     'is_published': True},
-    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
-    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
-]
-
-cats_db = [
-    {'id': 1, 'name': 'Актрисы'},
-    {'id': 2, 'name': 'Певицы'},
-    {'id': 3, 'name': 'Спортсменки'}
 ]
 
 
@@ -63,12 +50,16 @@ def login(request: HttpRequest):
     return HttpResponse("Авторизация")
 
 
-def show_category(request: HttpRequest, cat_id: int):
+def show_category(request: HttpRequest, cat_slug: str):
+    category = get_object_or_404(Category, slug=cat_slug)
+    blogs = Women.published.filter(cat_id=category.pk)
+
     data = {
-        'title': 'Главная страница',
-        'posts': data_db,
-        'cat_selected': cat_id
+        'title': f'Рубрика: {category.name}',
+        'blogs': blogs,
+        'cat_selected': category.pk
     }
+
     return render(request, 'aboutme/index.html', data)
 
 
