@@ -13,5 +13,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('login/', views.login, name='login'),
     path('blog/<slug:blog_slug>/', views.show_blog, name='blog'),
-    path('category/<slug:cat_slug>/', views.show_category, name='category')
+    path('category/<slug:cat_slug>/', views.show_category, name='category'),
+    path('tag/<slug:tag_slug>/', views.show_tag_bloglist, name='tag')
 ]

@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Women, Category
+from .models import Women, Category, TagBlog
 
 menu = [
     {'title': "О сайте", 'url_name': 'about'},
@@ -58,6 +58,19 @@ def show_category(request: HttpRequest, cat_slug: str):
         'title': f'Рубрика: {category.name}',
         'blogs': blogs,
         'cat_selected': category.pk
+    }
+
+    return render(request, 'aboutme/index.html', data)
+
+
+def show_tag_bloglist(request: HttpRequest, tag_slug: str):
+    tag = get_object_or_404(TagBlog, slug=tag_slug)
+    blogs = tag.tags.filter(is_published=Women.Status.PUBLISHED)
+
+    data = {
+        'title': f'Тег: {tag.tag}',
+        'blogs': blogs,
+        'cat_selected': None
     }
 
     return render(request, 'aboutme/index.html', data)
