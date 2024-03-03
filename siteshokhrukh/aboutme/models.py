@@ -20,6 +20,7 @@ class Women(models.Model):
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     cat = models.ForeignKey('Category', on_delete=models.PROTECT)
     tags = models.ManyToManyField('TagBlog', blank=True, related_name='tags')
+    husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -35,6 +36,14 @@ class Women(models.Model):
         indexes = [
             models.Index(fields=['-time_create'])
         ]
+
+
+class Husband(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.SmallIntegerField(null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):
