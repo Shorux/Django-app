@@ -12,15 +12,17 @@ class Women(models.Model):
         DRAFT = (0, 'Черновик')
         PUBLISHED = (1, 'Опубликовано')
 
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    content = models.TextField(blank=True)
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT)
-    tags = models.ManyToManyField('TagBlog', blank=True, related_name='tags')
-    husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='women')
+    title = models.CharField(max_length=255, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Slug')
+    content = models.TextField(blank=True, verbose_name='Текст статьи')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
+    is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.PUBLISHED, verbose_name='Статус')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категории')
+    tags = models.ManyToManyField('TagBlog', blank=True, related_name='tags', verbose_name='Теги')
+    husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True,
+                                   blank=True, related_name='women', verbose_name='Муж')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -32,6 +34,8 @@ class Women(models.Model):
         return self.title
 
     class Meta:
+        verbose_name = 'Известная женщина'
+        verbose_name_plural = 'Известные женщины'
         ordering = ['-time_create']
         indexes = [
             models.Index(fields=['-time_create'])
@@ -41,20 +45,25 @@ class Women(models.Model):
 class Husband(models.Model):
     name = models.CharField(max_length=100)
     age = models.SmallIntegerField(null=True)
+    m_count = models.SmallIntegerField(blank=True, default=0)
 
     def __str__(self):
         return self.name
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Название')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Slug')
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
 
 class TagBlog(models.Model):

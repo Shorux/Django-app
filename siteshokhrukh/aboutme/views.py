@@ -12,7 +12,7 @@ menu = [
 
 
 def index(request: HttpRequest):
-    blogs = Women.published.all()
+    blogs = Women.published.all().select_related('cat')
 
     data = {
         'title': 'Главная страница',
@@ -52,7 +52,7 @@ def login(request: HttpRequest):
 
 def show_category(request: HttpRequest, cat_slug: str):
     category = get_object_or_404(Category, slug=cat_slug)
-    blogs = Women.published.filter(cat_id=category.pk)
+    blogs = Women.published.filter(cat_id=category.pk).select_related('cat')
 
     data = {
         'title': f'Рубрика: {category.name}',
@@ -65,7 +65,7 @@ def show_category(request: HttpRequest, cat_slug: str):
 
 def show_tag_bloglist(request: HttpRequest, tag_slug: str):
     tag = get_object_or_404(TagBlog, slug=tag_slug)
-    blogs = tag.tags.filter(is_published=Women.Status.PUBLISHED)
+    blogs = tag.tags.filter(is_published=Women.Status.PUBLISHED).select_related('cat')
 
     data = {
         'title': f'Тег: {tag.tag}',

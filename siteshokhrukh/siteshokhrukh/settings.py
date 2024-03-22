@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-rdn#@jc@l@&7t^%_i=a@30c!1rhgm#0aj-qk(rf^7(_vzmm)!m
 DEBUG = True  # if False - python manage.py runserver --insecure
 
 ALLOWED_HOSTS = ['127.0.0.1']
+INTERNAL_IPS = ["127.0.0.1"]
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'aboutme.apps.AboutmeConfig',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'siteshokhrukh.urls'
@@ -107,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 

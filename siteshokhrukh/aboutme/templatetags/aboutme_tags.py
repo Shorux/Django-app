@@ -1,6 +1,7 @@
 import aboutme.views as views
 
 from django.template import Library
+from django.db.models import Count
 
 from aboutme.models import Category, TagBlog
 
@@ -14,7 +15,8 @@ def show_menu():
 
 @register.inclusion_tag('aboutme/list_categories.html')
 def show_categories(cat_selected=0):
-    return {'categories': Category.objects.all(), 'cat_selected': cat_selected}
+    cats = Category.objects.annotate(total=Count('women')).filter(total__gt=0)
+    return {'categories': cats, 'cat_selected': cat_selected}
 
 
 @register.inclusion_tag('aboutme/list_tags.html')
